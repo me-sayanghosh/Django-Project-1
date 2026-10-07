@@ -1,22 +1,36 @@
 {% extends "layout.html" %}
 
-{% block title %}Welcome - Chai Tweet{% endblock %}
+{% block title %}About - Chai Tweet{% endblock %}
 
 {% block content %}
-<div class="p-5 mb-4 bg-body-tertiary rounded-3 border border-secondary text-center">
-    <div class="container-fluid py-5">
-        <h1 class="display-4 fw-bold text-warning mb-3">Welcome to Chai Tweet ☕</h1>
-        <p class="col-md-8 fs-5 mx-auto text-secondary mb-4">
-            A full-stack Django Twitter clone where you can share tweets, upload photos, and connect with other chai and coffee lovers!
-        </p>
-        <div class="d-flex justify-content-center gap-3">
-            <a class="btn btn-warning btn-lg px-4" href="{% url 'tweet_list' %}">Explore Tweets</a>
-            {% if user.is_authenticated %}
-                <a class="btn btn-outline-light btn-lg px-4" href="{% url 'tweet_create' %}">Post a Tweet</a>
-            {% else %}
-                <a class="btn btn-outline-light btn-lg px-4" href="{% url 'register' %}">Join Now</a>
-            {% endif %}
+<div class="max-w-4xl mx-auto space-y-12 py-6">
+
+    <div class="relative rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-gradient-to-b from-zinc-50/60 to-white dark:from-zinc-900/60 dark:to-zinc-950 p-8 sm:p-14 text-center overflow-hidden shadow-xs">
+        <div class="relative z-10 space-y-4">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700">
+                ☕ Full-Stack Django Project
+            </span>
+
+            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-zinc-950 dark:text-white">
+                About Chai Tweet
+            </h1>
+
+            <p class="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 font-normal max-w-2xl mx-auto leading-relaxed">
+                An end-to-end full-stack Twitter clone built with Django 4.2 MTV architecture, Pillow for media uploads, custom user authentication, and a clean modern interface inspired by shadcn/ui.
+            </p>
+
+            <div class="pt-4 flex items-center justify-center gap-3">
+                <a href="{% url 'tweet_list' %}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold bg-zinc-950 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 transition">
+                    Explore Feed
+                </a>
+                {% if not user.is_authenticated %}
+                    <a href="{% url 'register' %}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition">
+                        Join Community
+                    </a>
+                {% endif %}
+            </div>
         </div>
     </div>
+
 </div>
 {% endblock %}

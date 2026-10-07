@@ -1,43 +1,94 @@
 {% extends "layout.html" %}
 
-{% block title %}Login - Chai Tweet{% endblock %}
+{% block title %}Sign In - Chai Tweet{% endblock %}
 
 {% block content %}
-<div class="row justify-content-center">
-    <div class="col-md-6 col-lg-5">
-        <div class="card border-secondary shadow-sm">
-            <div class="card-header border-secondary bg-body-tertiary">
-                <h4 class="mb-0 fw-bold text-warning">🔑 Sign In to Chai Tweet</h4>
+<div class="max-w-md mx-auto py-12">
+    
+    <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden shadow-xs">
+        
+        <!-- Mac Window Top Bar -->
+        <div class="px-5 py-3 bg-zinc-50 dark:bg-zinc-950/60 border-b border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between">
+            <div class="flex items-center gap-1.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-red-400/90 inline-block"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-amber-400/90 inline-block"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400/90 inline-block"></span>
             </div>
-            <div class="card-body p-4">
-                {% if form.errors %}
-                    <div class="alert alert-danger" role="alert">
-                        Your username and password didn't match. Please try again.
-                    </div>
-                {% endif %}
+            <span class="text-xs font-mono text-zinc-400">
+                auth.chai/login
+            </span>
+        </div>
 
-                <form method="post" action="{% url 'login' %}">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="id_username" class="form-label fw-semibold">Username</label>
-                        <input type="text" name="username" autofocus autocapitalize="none" autocomplete="username" maxlength="150" required id="id_username" class="form-control" placeholder="Enter username">
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="id_password" class="form-label fw-semibold">Password</label>
-                        <input type="password" name="password" autocomplete="current-password" required id="id_password" class="form-control" placeholder="Enter password">
-                    </div>
-
-                    <button type="submit" class="btn btn-warning w-100 py-2 fw-semibold">Login</button>
-                </form>
-
-                <div class="text-center mt-3 pt-3 border-top border-secondary">
-                    <p class="mb-0 text-body-secondary">
-                        Don't have an account? <a href="{% url 'register' %}" class="text-warning">Register here</a>
-                    </p>
+        <div class="p-6 sm:p-8 space-y-6">
+            <div class="text-center space-y-1">
+                <div class="w-10 h-10 mx-auto rounded-full bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-lg mb-2">
+                    🔑
                 </div>
+                <h2 class="text-2xl font-bold tracking-tight text-zinc-950 dark:text-white">
+                    Welcome back
+                </h2>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400">
+                    Sign in to your Chai Tweet account to post and manage tweets.
+                </p>
+            </div>
+
+            {% if form.errors %}
+                <div class="p-3.5 rounded-xl border border-red-200 dark:border-red-900/60 bg-red-50 dark:bg-red-950/40 text-xs text-red-700 dark:text-red-300">
+                    Your username and password didn't match. Please try again.
+                </div>
+            {% endif %}
+
+            <form method="post" action="{% url 'login' %}" class="space-y-4">
+                {% csrf_token %}
+
+                <div class="space-y-1.5">
+                    <label for="id_username" class="block text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                        Username
+                    </label>
+                    <input 
+                        type="text" 
+                        name="username" 
+                        autofocus 
+                        autocapitalize="none" 
+                        autocomplete="username" 
+                        maxlength="150" 
+                        required 
+                        id="id_username" 
+                        placeholder="e.g. sayan"
+                        class="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-zinc-100 transition"
+                    >
+                </div>
+
+                <div class="space-y-1.5">
+                    <label for="id_password" class="block text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                        Password
+                    </label>
+                    <input 
+                        type="password" 
+                        name="password" 
+                        autocomplete="current-password" 
+                        required 
+                        id="id_password" 
+                        placeholder="••••••••"
+                        class="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-zinc-100 transition"
+                    >
+                </div>
+
+                <button type="submit" class="w-full mt-2 inline-flex items-center justify-center gap-2 py-3 px-4 rounded-full text-xs font-semibold bg-zinc-950 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 transition shadow-sm">
+                    Sign In
+                </button>
+            </form>
+
+            <div class="text-center pt-4 border-t border-zinc-100 dark:border-zinc-800">
+                <p class="text-xs text-zinc-500 dark:text-zinc-400">
+                    Don't have an account? 
+                    <a href="{% url 'register' %}" class="font-semibold text-zinc-900 dark:text-white hover:underline">
+                        Create one now
+                    </a>
+                </p>
             </div>
         </div>
     </div>
+
 </div>
 {% endblock %}
