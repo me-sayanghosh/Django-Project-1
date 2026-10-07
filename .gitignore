@@ -49,3 +49,13 @@ htmlcov/
 
 # Logs
 *.log
+
+# Node.js & React
+node_modules/
+*/node_modules/
+dist/
+*/dist/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+

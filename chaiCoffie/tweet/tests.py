@@ -66,3 +66,28 @@ class ChaiTweetTests(TestCase):
         })
         self.assertEqual(response.status_code, 302)
         self.assertTrue(User.objects.filter(username='newuser').exists())
+
+    def test_api_tweet_list(self):
+        response = self.client.get(reverse('api_tweet_list_create'))
+        self.assertEqual(response.status_code, 200)
+        self.assertGreaterEqual(len(response.json()), 1)
+
+    def test_api_auth_register_and_tweet_create(self):
+        # Register via API
+        reg_resp = self.client.post(reverse('api_register'), {
+            'username': 'apitester',
+            'email': 'api@example.com',
+            'password': 'ApiPassword123!',
+        }, content_type='application/json')
+        self.assertEqual(reg_resp.status_code, 201)
+        token = reg_resp.json()['token']
+
+        # Create tweet with token
+        tweet_resp = self.client.post(
+            reverse('api_tweet_list_create'),
+            {'text': 'API tweet test content'},
+            HTTP_AUTHORIZATION=f'Token {token}'
+        )
+        self.assertEqual(tweet_resp.status_code, 201)
+        self.assertEqual(tweet_resp.json()['text'], 'API tweet test content')
+
