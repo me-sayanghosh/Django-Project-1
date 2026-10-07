@@ -1,0 +1,50 @@
+{% extends "layout.html" %}
+
+{% block title %}Register - Chai Tweet{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <div class="card border-secondary shadow-sm">
+            <div class="card-header border-secondary bg-body-tertiary">
+                <h4 class="mb-0 fw-bold text-warning">✨ Create an Account</h4>
+            </div>
+            <div class="card-body p-4">
+                <form method="post">
+                    {% csrf_token %}
+
+                    {% for field in form %}
+                        <div class="mb-3">
+                            <label for="{{ field.id_for_label }}" class="form-label fw-semibold">
+                                {{ field.label }}
+                            </label>
+                            <input
+                                type="{{ field.field.widget.input_type|default:'text' }}"
+                                name="{{ field.html_name }}"
+                                id="{{ field.id_for_label }}"
+                                class="form-control {% if field.errors %}is-invalid{% endif %}"
+                                value="{{ field.value|default:'' }}"
+                                {% if field.field.required %}required{% endif %}
+                            >
+                            {% if field.help_text %}
+                                <div class="form-text small">{{ field.help_text|safe }}</div>
+                            {% endif %}
+                            {% for error in field.errors %}
+                                <div class="text-danger small mt-1">{{ error }}</div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+
+                    <button type="submit" class="btn btn-warning w-100 py-2 fw-semibold mt-2">Sign Up</button>
+                </form>
+
+                <div class="text-center mt-3 pt-3 border-top border-secondary">
+                    <p class="mb-0 text-body-secondary">
+                        Already have an account? <a href="{% url 'login' %}" class="text-warning">Login here</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

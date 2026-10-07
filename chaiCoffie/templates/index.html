@@ -1,0 +1,22 @@
+{% extends "layout.html" %}
+
+{% block title %}Welcome - Chai Tweet{% endblock %}
+
+{% block content %}
+<div class="p-5 mb-4 bg-body-tertiary rounded-3 border border-secondary text-center">
+    <div class="container-fluid py-5">
+        <h1 class="display-4 fw-bold text-warning mb-3">Welcome to Chai Tweet ☕</h1>
+        <p class="col-md-8 fs-5 mx-auto text-secondary mb-4">
+            A full-stack Django Twitter clone where you can share tweets, upload photos, and connect with other chai and coffee lovers!
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+            <a class="btn btn-warning btn-lg px-4" href="{% url 'tweet_list' %}">Explore Tweets</a>
+            {% if user.is_authenticated %}
+                <a class="btn btn-outline-light btn-lg px-4" href="{% url 'tweet_create' %}">Post a Tweet</a>
+            {% else %}
+                <a class="btn btn-outline-light btn-lg px-4" href="{% url 'register' %}">Join Now</a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
