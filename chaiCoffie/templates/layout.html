@@ -89,7 +89,6 @@
 
                 <!-- Nav Links -->
                 <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                    <a href="{% url 'tweet_list' %}" class="hover:text-zinc-950 dark:hover:text-zinc-100 transition">Home</a>
                     <a href="{% url 'tweet_list' %}#feed" class="hover:text-zinc-950 dark:hover:text-zinc-100 transition">Feed</a>
                     {% if user.is_authenticated %}
                         <a href="{% url 'tweet_create' %}" class="hover:text-zinc-950 dark:hover:text-zinc-100 transition flex items-center gap-1">

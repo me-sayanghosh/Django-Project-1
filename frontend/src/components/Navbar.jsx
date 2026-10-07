@@ -67,16 +67,6 @@ export default function Navbar({
             {/* Nav Links */}
             <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
               <button 
-                onClick={() => onNavigate ? onNavigate('home') : null}
-                className={`transition cursor-pointer ${
-                  currentView === 'home' 
-                    ? 'text-zinc-950 dark:text-zinc-100 font-semibold' 
-                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100'
-                }`}
-              >
-                Home
-              </button>
-              <button 
                 onClick={() => onNavigate ? onNavigate('feed') : null}
                 className={`transition cursor-pointer ${
                   currentView === 'feed' 
