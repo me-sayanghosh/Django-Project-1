@@ -59,21 +59,6 @@ export default function Hero({ user, tweetCount, onOpenCompose, onOpenAuth }) {
           </a>
         </div>
 
-        {/* Stats Row */}
-        <div className="pt-8 flex flex-wrap items-center justify-center gap-8 sm:gap-12 text-xs text-zinc-500 dark:text-zinc-400 transition-colors">
-          <div className="flex items-center gap-1.5">
-            <span className="font-extrabold text-sm text-zinc-950 dark:text-white">{tweetCount}+</span>
-            <span>posts shared</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="font-extrabold text-sm text-zinc-950 dark:text-white">Active</span>
-            <span>community</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <span className="font-extrabold text-sm text-zinc-950 dark:text-white">Instant</span>
-            <span>conversations</span>
-          </div>
-        </div>
 
       </div>
     </div>
