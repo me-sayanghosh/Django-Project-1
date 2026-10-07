@@ -12,6 +12,29 @@ export default function App() {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  // Theme state ('light' | 'dark')
+  const [theme, setTheme] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('theme') || 'light';
+    }
+    return 'light';
+  });
+
+  // Sync theme with <html> class and localStorage
+  useEffect(() => {
+    const root = document.documentElement;
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'dark' ? 'light' : 'dark'));
+  };
+
   // Modals state
   const [isTweetModalOpen, setIsTweetModalOpen] = useState(false);
   const [editingTweet, setEditingTweet] = useState(null);
@@ -77,7 +100,7 @@ export default function App() {
   };
 
   return (
-    <div className="bg-white min-h-screen flex flex-col text-zinc-900">
+    <div className="bg-white dark:bg-zinc-950 min-h-screen flex flex-col text-zinc-900 dark:text-zinc-100 transition-colors duration-200">
       
       {/* Navbar */}
       <Navbar
@@ -85,6 +108,8 @@ export default function App() {
         onOpenAuth={handleOpenAuth}
         onOpenCompose={handleOpenCompose}
         onLogout={handleLogout}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
 
       {/* Main Container */}
@@ -101,17 +126,17 @@ export default function App() {
         {/* Feed Section */}
         <div id="feed" className="space-y-6 pt-4 mb-24">
           <div className="text-center space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-950">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white transition-colors">
               Recent Community Tweets
             </h2>
-            <p className="text-xs sm:text-sm text-zinc-500 max-w-xl mx-auto">
+            <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 max-w-xl mx-auto transition-colors">
               Fresh updates and stories from people around the community
             </p>
           </div>
 
           {loading ? (
             <div className="flex items-center justify-center py-20">
-              <div className="animate-spin rounded-full h-8 w-8 border-2 border-zinc-900 border-t-transparent"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-2 border-zinc-900 dark:border-zinc-100 border-t-transparent"></div>
             </div>
           ) : tweets.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
@@ -126,23 +151,23 @@ export default function App() {
               ))}
             </div>
           ) : (
-            <div className="max-w-md mx-auto text-center py-16 px-6 rounded-2xl border border-dashed border-zinc-300 bg-zinc-50/60">
-              <div className="w-12 h-12 mx-auto rounded-full bg-white border border-zinc-200 flex items-center justify-center text-xl mb-4 shadow-2xs">
+            <div className="max-w-md mx-auto text-center py-16 px-6 rounded-2xl border border-dashed border-zinc-300 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/40 transition-colors">
+              <div className="w-12 h-12 mx-auto rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-xl mb-4 shadow-2xs">
                 ☕
               </div>
-              <h3 className="text-base font-semibold text-zinc-900 mb-1">No tweets published yet</h3>
-              <p className="text-xs text-zinc-500 mb-5">Be the first to brew a fresh post for the community.</p>
+              <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-100 mb-1">No tweets published yet</h3>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-5">Be the first to brew a fresh post for the community.</p>
               {user ? (
                 <button
                   onClick={() => handleOpenCompose()}
-                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-semibold bg-black hover:bg-zinc-800 text-white transition shadow-sm cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-semibold bg-black dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-black transition shadow-sm cursor-pointer"
                 >
                   <Plus className="w-3.5 h-3.5" /> Create First Tweet
                 </button>
               ) : (
                 <button
                   onClick={() => handleOpenAuth('login')}
-                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-semibold bg-black hover:bg-zinc-800 text-white transition shadow-sm cursor-pointer"
+                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-semibold bg-black dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-black transition shadow-sm cursor-pointer"
                 >
                   Sign in to Post
                 </button>
@@ -152,43 +177,43 @@ export default function App() {
         </div>
 
         {/* About Section */}
-        <div id="about" className="border-t border-zinc-200/90 pt-16 pb-12 space-y-12">
+        <div id="about" className="border-t border-zinc-200/90 dark:border-zinc-800 pt-16 pb-12 space-y-12 transition-colors">
           <div className="text-center space-y-2">
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-950">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white transition-colors">
               About Chai Tweet
             </h2>
-            <p className="text-xs sm:text-sm text-zinc-500 max-w-xl mx-auto">
+            <p className="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 max-w-xl mx-auto transition-colors">
               Chai Tweet is a distraction-free space to share your thoughts, stories, and photos with friends and creators across the community.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
-            <div className="p-6 rounded-2xl border border-zinc-200/90 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04)] space-y-2">
-              <div className="w-10 h-10 rounded-xl bg-zinc-50 border border-zinc-200 flex items-center justify-center text-lg mb-3">
-                <Sparkles className="w-5 h-5 text-zinc-800" />
+            <div className="p-6 rounded-2xl border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-[0_1px_3px_rgba(0,0,0,0.04)] space-y-2 transition-colors">
+              <div className="w-10 h-10 rounded-xl bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-lg mb-3">
+                <Sparkles className="w-5 h-5 text-zinc-800 dark:text-zinc-200" />
               </div>
-              <h3 className="font-bold text-base text-zinc-950">Express Yourself</h3>
-              <p className="text-xs text-zinc-500 leading-relaxed">
+              <h3 className="font-bold text-base text-zinc-950 dark:text-zinc-100">Express Yourself</h3>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
                 Share thoughts in quick, concise posts and engage with meaningful conversations anytime.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl border border-zinc-200/90 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04)] space-y-2">
-              <div className="w-10 h-10 rounded-xl bg-zinc-50 border border-zinc-200 flex items-center justify-center text-lg mb-3">
-                <Image className="w-5 h-5 text-zinc-800" />
+            <div className="p-6 rounded-2xl border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-[0_1px_3px_rgba(0,0,0,0.04)] space-y-2 transition-colors">
+              <div className="w-10 h-10 rounded-xl bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-lg mb-3">
+                <Image className="w-5 h-5 text-zinc-800 dark:text-zinc-200" />
               </div>
-              <h3 className="font-bold text-base text-zinc-950">Photo Sharing</h3>
-              <p className="text-xs text-zinc-500 leading-relaxed">
+              <h3 className="font-bold text-base text-zinc-950 dark:text-zinc-100">Photo Sharing</h3>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
                 Bring your updates to life by uploading photos directly alongside your messages.
               </p>
             </div>
 
-            <div className="p-6 rounded-2xl border border-zinc-200/90 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04)] space-y-2">
-              <div className="w-10 h-10 rounded-xl bg-zinc-50 border border-zinc-200 flex items-center justify-center text-lg mb-3">
-                <Lock className="w-5 h-5 text-zinc-800" />
+            <div className="p-6 rounded-2xl border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-[0_1px_3px_rgba(0,0,0,0.04)] space-y-2 transition-colors">
+              <div className="w-10 h-10 rounded-xl bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-lg mb-3">
+                <Lock className="w-5 h-5 text-zinc-800 dark:text-zinc-200" />
               </div>
-              <h3 className="font-bold text-base text-zinc-950">Safe & Personal</h3>
-              <p className="text-xs text-zinc-500 leading-relaxed">
+              <h3 className="font-bold text-base text-zinc-950 dark:text-zinc-100">Safe & Personal</h3>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
                 Keep control over your content with personal account security and privacy controls.
               </p>
             </div>
@@ -198,17 +223,17 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-zinc-200 py-10 bg-white mt-auto">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
+      <footer className="border-t border-zinc-200 dark:border-zinc-800 py-10 bg-white dark:bg-zinc-950 mt-auto transition-colors">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 dark:text-zinc-400">
           <div className="flex items-center gap-2">
-            <span className="font-bold text-zinc-900">chai.tweet</span>
+            <span className="font-bold text-zinc-900 dark:text-zinc-100">chai.tweet</span>
             <span>•</span>
             <span>A simple, modern microblogging space</span>
           </div>
           <div className="flex items-center gap-6">
-            <a href="#feed" className="hover:text-zinc-900 transition">Feed</a>
-            <a href="#about" className="hover:text-zinc-900 transition">About</a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-900 transition">GitHub</a>
+            <a href="#feed" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition">Feed</a>
+            <a href="#about" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition">About</a>
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition">GitHub</a>
           </div>
         </div>
       </footer>

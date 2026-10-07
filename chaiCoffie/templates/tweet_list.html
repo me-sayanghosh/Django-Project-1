@@ -6,10 +6,10 @@
 <div class="space-y-16">
 
     <!-- Hero Card Container (Light Pastel Theme, Rounded-3xl, Faint Icons) -->
-    <div class="relative rounded-[32px] border border-zinc-200/90 bg-[#fafafa] p-8 sm:p-14 md:p-20 text-center overflow-hidden shadow-[0_1px_4px_rgba(0,0,0,0.03)]">
+    <div class="relative rounded-[32px] border border-zinc-200/90 dark:border-zinc-800 bg-[#fafafa] dark:bg-zinc-900/50 p-8 sm:p-14 md:p-20 text-center overflow-hidden shadow-[0_1px_4px_rgba(0,0,0,0.03)] transition-colors">
         
-        <!-- Faint Floating Decorative Icons (Matching Screenshot's Faint Background Icons) -->
-        <div class="absolute inset-0 pointer-events-none opacity-[0.12] select-none text-zinc-500 overflow-hidden">
+        <!-- Faint Floating Decorative Icons -->
+        <div class="absolute inset-0 pointer-events-none opacity-[0.12] dark:opacity-[0.08] select-none text-zinc-500 dark:text-zinc-400 overflow-hidden">
             <i data-lucide="rocket" class="w-6 h-6 absolute top-8 left-14"></i>
             <i data-lucide="trophy" class="w-6 h-6 absolute top-10 right-28"></i>
             <i data-lucide="sparkles" class="w-6 h-6 absolute top-28 left-36"></i>
@@ -26,47 +26,47 @@
         <div class="relative z-10 max-w-3xl mx-auto space-y-6">
             
             <!-- Main Hero Heading with Tight Tracking -->
-            <h1 class="text-4xl sm:text-5xl md:text-[60px] font-extrabold tracking-tight text-zinc-950 leading-[1.08]">
+            <h1 class="text-4xl sm:text-5xl md:text-[60px] font-extrabold tracking-tight text-zinc-950 dark:text-white leading-[1.08] transition-colors">
                 Share Your Thoughts.<br>
                 Connect Over Chai.
             </h1>
 
             <!-- Subtitle Description -->
-            <p class="text-base sm:text-lg text-zinc-600 font-normal max-w-xl mx-auto leading-relaxed">
+            <p class="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 font-normal max-w-xl mx-auto leading-relaxed transition-colors">
                 Join a friendly community of creators and friends. Share short updates, post photos, and discover interesting conversations.
             </p>
 
-            <!-- Action Buttons (Black Primary Pill + White Secondary Pill) -->
+            <!-- Action Buttons -->
             <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
                 {% if user.is_authenticated %}
-                    <a href="{% url 'tweet_create' %}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold bg-black hover:bg-zinc-800 text-white transition shadow-sm hover:scale-[1.01] active:scale-[0.99]">
+                    <a href="{% url 'tweet_create' %}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold bg-black dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-black transition shadow-sm hover:scale-[1.01] active:scale-[0.99]">
                         <i data-lucide="plus" class="w-4 h-4"></i> Post a Tweet
                     </a>
-                    <a href="#feed" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium border border-zinc-200 bg-white text-zinc-900 hover:bg-zinc-50 transition shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                    <a href="#feed" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800/80 transition shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
                         Explore Feed
                     </a>
                 {% else %}
-                    <a href="{% url 'register' %}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold bg-black hover:bg-zinc-800 text-white transition shadow-sm hover:scale-[1.01] active:scale-[0.99]">
+                    <a href="{% url 'register' %}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold bg-black dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-black transition shadow-sm hover:scale-[1.01] active:scale-[0.99]">
                         Get Started
                     </a>
-                    <a href="{% url 'login' %}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium border border-zinc-200 bg-white text-zinc-900 hover:bg-zinc-50 transition shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
+                    <a href="{% url 'login' %}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800/80 transition shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
                         Sign In
                     </a>
                 {% endif %}
             </div>
 
-            <!-- Stats Bar (Clean Product Highlights) -->
-            <div class="pt-8 flex flex-wrap items-center justify-center gap-8 sm:gap-12 text-xs text-zinc-500">
+            <!-- Stats Bar -->
+            <div class="pt-8 flex flex-wrap items-center justify-center gap-8 sm:gap-12 text-xs text-zinc-500 dark:text-zinc-400 transition-colors">
                 <div class="flex items-center gap-1.5">
-                    <span class="font-extrabold text-sm text-zinc-950">{{ tweets|length }}+</span>
+                    <span class="font-extrabold text-sm text-zinc-950 dark:text-white">{{ tweets|length }}+</span>
                     <span>posts shared</span>
                 </div>
                 <div class="flex items-center gap-1.5">
-                    <span class="font-extrabold text-sm text-zinc-950">Active</span>
+                    <span class="font-extrabold text-sm text-zinc-950 dark:text-white">Active</span>
                     <span>community</span>
                 </div>
                 <div class="flex items-center gap-1.5">
-                    <span class="font-extrabold text-sm text-zinc-950">Instant</span>
+                    <span class="font-extrabold text-sm text-zinc-950 dark:text-white">Instant</span>
                     <span>conversations</span>
                 </div>
             </div>
@@ -78,35 +78,35 @@
         
         <!-- Section Header -->
         <div class="text-center space-y-2">
-            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-950">
+            <h2 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-zinc-950 dark:text-white transition-colors">
                 Recent Community Tweets
             </h2>
-            <p class="text-xs sm:text-sm text-zinc-500 max-w-xl mx-auto">
+            <p class="text-xs sm:text-sm text-zinc-500 dark:text-zinc-400 max-w-xl mx-auto transition-colors">
                 Fresh updates and stories from people around the community
             </p>
         </div>
 
         {% if tweets %}
-            <!-- Grid of Cards (Mac Window Header Style from Screenshot) -->
+            <!-- Grid of Cards (Mac Window Header Style) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
                 {% for tweet in tweets %}
-                    <div class="group flex flex-col rounded-2xl border border-zinc-200/90 bg-white overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
+                    <div class="group flex flex-col rounded-2xl border border-zinc-200/90 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)] hover:shadow-md transition-all duration-200 hover:-translate-y-0.5">
                         
-                        <!-- Mac Window Top Bar (Exact Screenshot Style with colored dots) -->
-                        <div class="px-4 py-2.5 bg-[#fbfbfb] border-b border-zinc-100 flex items-center justify-between">
+                        <!-- Mac Window Top Bar -->
+                        <div class="px-4 py-2.5 bg-[#fbfbfb] dark:bg-zinc-950/80 border-b border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between transition-colors">
                             <div class="flex items-center gap-1.5">
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#ff5f56] inline-block"></span>
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] inline-block"></span>
                                 <span class="w-2.5 h-2.5 rounded-full bg-[#27c93f] inline-block"></span>
                             </div>
-                            <span class="text-[11px] font-mono text-zinc-400">
+                            <span class="text-[11px] font-mono text-zinc-400 dark:text-zinc-500">
                                 post/{{ tweet.id }}
                             </span>
                         </div>
 
-                        <!-- Card Image (If Attached) -->
+                        <!-- Card Image -->
                         {% if tweet.photo %}
-                            <div class="relative overflow-hidden bg-zinc-50 border-b border-zinc-100">
+                            <div class="relative overflow-hidden bg-zinc-50 dark:bg-zinc-950 border-b border-zinc-100 dark:border-zinc-800">
                                 <img src="{{ tweet.photo.url }}" alt="Photo for tweet" class="w-full h-48 object-cover group-hover:scale-101 transition duration-200">
                             </div>
                         {% endif %}
@@ -117,36 +117,36 @@
                                 <!-- Author Header -->
                                 <div class="flex items-center justify-between mb-3">
                                     <div class="flex items-center gap-2">
-                                        <div class="w-8 h-8 rounded-full bg-zinc-100 border border-zinc-300 text-zinc-800 flex items-center justify-center font-bold text-xs">
+                                        <div class="w-8 h-8 rounded-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 text-zinc-800 dark:text-zinc-200 flex items-center justify-center font-bold text-xs">
                                             {{ tweet.user.username|make_list|first|upper }}
                                         </div>
                                         <div>
-                                            <div class="text-sm font-semibold text-zinc-900 leading-tight">
+                                            <div class="text-sm font-semibold text-zinc-900 dark:text-zinc-100 leading-tight">
                                                 @{{ tweet.user.username }}
                                             </div>
-                                            <div class="text-[11px] text-zinc-400">
+                                            <div class="text-[11px] text-zinc-400 dark:text-zinc-500">
                                                 {{ tweet.created_at|date:"M d, Y • h:i A" }}
                                             </div>
                                         </div>
                                     </div>
-                                    <span class="text-[11px] px-2 py-0.5 rounded-full font-medium bg-zinc-100 text-zinc-600 border border-zinc-200">
+                                    <span class="text-[11px] px-2 py-0.5 rounded-full font-medium bg-zinc-100 dark:bg-zinc-800 text-zinc-600 dark:text-zinc-400 border border-zinc-200 dark:border-zinc-700">
                                         #chai
                                     </span>
                                 </div>
 
                                 <!-- Tweet Content -->
-                                <p class="text-sm text-zinc-700 leading-relaxed break-words whitespace-pre-line font-normal">
+                                <p class="text-sm text-zinc-700 dark:text-zinc-300 leading-relaxed break-words whitespace-pre-line font-normal">
                                     {{ tweet.text }}
                                 </p>
                             </div>
 
                             <!-- Conditional Owner Controls (Edit / Delete) -->
                             {% if tweet.user == request.user %}
-                                <div class="pt-3 border-t border-zinc-100 flex items-center justify-end gap-2">
-                                    <a href="{% url 'tweet_edit' tweet.id %}" class="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-lg text-zinc-700 hover:bg-zinc-100 border border-zinc-200 transition">
+                                <div class="pt-3 border-t border-zinc-100 dark:border-zinc-800 flex items-center justify-end gap-2">
+                                    <a href="{% url 'tweet_edit' tweet.id %}" class="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-lg text-zinc-700 dark:text-zinc-300 hover:bg-zinc-100 dark:hover:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 transition">
                                         <i data-lucide="edit-3" class="w-3 h-3"></i> Edit
                                     </a>
-                                    <a href="{% url 'tweet_delete' tweet.id %}" class="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-lg text-red-600 hover:bg-red-50 border border-red-200 transition">
+                                    <a href="{% url 'tweet_delete' tweet.id %}" class="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium rounded-lg text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950/30 border border-red-200 dark:border-red-900/50 transition">
                                         <i data-lucide="trash-2" class="w-3.5 h-3.5"></i> Delete
                                     </a>
                                 </div>
@@ -157,18 +157,18 @@
             </div>
         {% else %}
             <!-- Empty State -->
-            <div class="max-w-md mx-auto text-center py-16 px-6 rounded-2xl border border-dashed border-zinc-300 bg-zinc-50/60">
-                <div class="w-12 h-12 mx-auto rounded-full bg-white border border-zinc-200 flex items-center justify-center text-xl mb-4 shadow-2xs">
+            <div class="max-w-md mx-auto text-center py-16 px-6 rounded-2xl border border-dashed border-zinc-300 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/40 transition-colors">
+                <div class="w-12 h-12 mx-auto rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-xl mb-4 shadow-2xs">
                     ☕
                 </div>
-                <h3 class="text-base font-semibold text-zinc-900 mb-1">No tweets published yet</h3>
-                <p class="text-xs text-zinc-500 mb-5">Be the first to brew a fresh post for the community.</p>
+                <h3 class="text-base font-semibold text-zinc-900 dark:text-zinc-100 mb-1">No tweets published yet</h3>
+                <p class="text-xs text-zinc-500 dark:text-zinc-400 mb-5">Be the first to brew a fresh post for the community.</p>
                 {% if user.is_authenticated %}
-                    <a href="{% url 'tweet_create' %}" class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-semibold bg-black hover:bg-zinc-800 text-white transition shadow-sm">
+                    <a href="{% url 'tweet_create' %}" class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-semibold bg-black dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-black transition shadow-sm">
                         <i data-lucide="plus" class="w-3.5 h-3.5"></i> Create First Tweet
                     </a>
                 {% else %}
-                    <a href="{% url 'login' %}" class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-semibold bg-black hover:bg-zinc-800 text-white transition shadow-sm">
+                    <a href="{% url 'login' %}" class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-semibold bg-black dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-black transition shadow-sm">
                         Sign in to Post
                     </a>
                 {% endif %}

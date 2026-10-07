@@ -54,50 +54,49 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <script>
-        // Default to light theme
-        if (localStorage.getItem('color-theme') === 'dark') {
+        // Check theme from localStorage (shared key 'theme')
+        if (localStorage.getItem('theme') === 'dark' || localStorage.getItem('color-theme') === 'dark') {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark');
-            localStorage.setItem('color-theme', 'light');
         }
     </script>
 </head>
-<body class="bg-[#ffffff] text-zinc-900 font-sans min-h-screen flex flex-col antialiased selection:bg-zinc-900 selection:text-white transition-colors duration-200">
+<body class="bg-[#ffffff] dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans min-h-screen flex flex-col antialiased selection:bg-zinc-900 selection:text-white transition-colors duration-200">
 
     <!-- Top Announcement Bar -->
-    <div class="w-full bg-white text-zinc-600 text-xs py-2 px-4 text-center border-b border-zinc-200/80 flex items-center justify-center gap-1.5 font-medium">
+    <div class="w-full bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 text-xs py-2 px-4 text-center border-b border-zinc-200/80 dark:border-zinc-800/80 flex items-center justify-center gap-1.5 font-medium transition-colors">
         <span>✨ Welcome to Chai Tweet — share what's on your mind today</span>
-        <a href="{% url 'tweet_list' %}" class="inline-flex items-center gap-1 text-zinc-950 font-semibold hover:underline transition ml-1">
+        <a href="{% url 'tweet_list' %}" class="inline-flex items-center gap-1 text-zinc-950 dark:text-zinc-100 font-semibold hover:underline transition ml-1">
             Explore feed →
         </a>
     </div>
 
     <!-- Navigation Header (Matches Screenshot: Pure White with hair-line border) -->
-    <header class="sticky top-0 z-50 w-full border-b border-zinc-200/80 bg-white/95 backdrop-blur-md">
+    <header class="sticky top-0 z-50 w-full border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/95 dark:bg-zinc-950/90 backdrop-blur-md transition-colors">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
             
             <!-- Brand / Logo (Circle Icon + Bold Name) -->
             <div class="flex items-center gap-8">
                 <a href="{% url 'tweet_list' %}" class="flex items-center gap-2.5 group">
-                    <div class="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center font-bold text-sm shadow-xs transition group-hover:scale-105">
-                        <span class="text-xs">●</span>
+                    <div class="w-8 h-8 rounded-full bg-black dark:bg-white text-white dark:text-black flex items-center justify-center font-bold text-sm shadow-xs transition group-hover:scale-105">
+                        <span className="text-xs">●</span>
                     </div>
-                    <span class="font-extrabold text-lg tracking-tight text-zinc-950">
-                        chai<span class="text-zinc-400">.</span>tweet
+                    <span class="font-extrabold text-lg tracking-tight text-zinc-950 dark:text-zinc-50">
+                        chai<span class="text-zinc-400 dark:text-zinc-500">.</span>tweet
                     </span>
                 </a>
 
-                <!-- Nav Links (Matches Screenshot: Templates, Blocks, MCP, Browse, Pricing style) -->
-                <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-600">
-                    <a href="{% url 'tweet_list' %}" class="hover:text-zinc-950 transition">Feed</a>
+                <!-- Nav Links -->
+                <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-600 dark:text-zinc-400">
+                    <a href="{% url 'tweet_list' %}" class="hover:text-zinc-950 dark:hover:text-zinc-100 transition">Feed</a>
                     {% if user.is_authenticated %}
-                        <a href="{% url 'tweet_create' %}" class="hover:text-zinc-950 transition flex items-center gap-1">
+                        <a href="{% url 'tweet_create' %}" class="hover:text-zinc-950 dark:hover:text-zinc-100 transition flex items-center gap-1">
                             New Tweet
                         </a>
                     {% endif %}
-                    <a href="{% url 'index' %}" class="hover:text-zinc-950 transition">About</a>
-                    <a href="{% url 'tweet_list' %}#feed" class="text-zinc-400 hover:text-zinc-950 transition">Browse</a>
+                    <a href="{% url 'index' %}" class="hover:text-zinc-950 dark:hover:text-zinc-100 transition">About</a>
+                    <a href="{% url 'tweet_list' %}#feed" class="text-zinc-400 dark:text-zinc-500 hover:text-zinc-950 dark:hover:text-zinc-100 transition">Browse</a>
                 </nav>
             </div>
 
@@ -105,47 +104,46 @@
             <div class="flex items-center gap-3">
                 
                 <!-- Search Bar with Shortcut K (Matches Screenshot Exactly) -->
-                <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-zinc-200 bg-zinc-50 text-xs text-zinc-500 w-44 lg:w-56 hover:border-zinc-300 transition">
+                <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs text-zinc-500 dark:text-zinc-400 w-44 lg:w-56 hover:border-zinc-300 dark:hover:border-zinc-700 transition">
                     <i data-lucide="search" class="w-3.5 h-3.5 text-zinc-400"></i>
                     <span class="flex-1 font-normal">Search</span>
-                    <kbd class="px-1.5 py-0.5 text-[10px] font-semibold bg-white border border-zinc-200 rounded shadow-xs text-zinc-500">⌘ K</kbd>
+                    <kbd class="px-1.5 py-0.5 text-[10px] font-semibold bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded shadow-xs text-zinc-500 dark:text-zinc-400">⌘ K</kbd>
                 </div>
 
                 <!-- Light / Dark Mode Toggle Icon -->
-                <button id="theme-toggle" type="button" class="p-2 rounded-lg text-zinc-500 hover:text-zinc-950 hover:bg-zinc-100 transition" aria-label="Toggle theme">
-                    <i id="theme-toggle-light-icon" data-lucide="sun" class="w-4 h-4"></i>
-                    <i id="theme-toggle-dark-icon" data-lucide="moon" class="w-4 h-4 hidden"></i>
+                <button id="theme-toggle" type="button" class="p-2 rounded-lg text-zinc-500 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition cursor-pointer" aria-label="Toggle theme">
+                    <span id="theme-toggle-icon-container"></span>
                 </button>
 
                 <!-- GitHub Icon -->
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100 transition" aria-label="GitHub">
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition" aria-label="GitHub">
                     <i data-lucide="github" class="w-4 h-4"></i>
                 </a>
 
-                <!-- Auth Buttons (Matches Screenshot: Black Pill Button) -->
+                <!-- Auth Buttons -->
                 {% if user.is_authenticated %}
-                    <div class="flex items-center gap-3 pl-2 border-l border-zinc-200">
-                        <div class="flex items-center gap-2 text-xs font-medium text-zinc-700">
-                            <div class="w-7 h-7 rounded-full bg-zinc-100 border border-zinc-300 flex items-center justify-center font-bold text-zinc-800">
+                    <div class="flex items-center gap-3 pl-2 border-l border-zinc-200 dark:border-zinc-800">
+                        <div class="flex items-center gap-2 text-xs font-medium text-zinc-700 dark:text-zinc-300">
+                            <div class="w-7 h-7 rounded-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-300 dark:border-zinc-700 flex items-center justify-center font-bold text-zinc-800 dark:text-zinc-200">
                                 {{ user.username|make_list|first|upper }}
                             </div>
                             <span class="hidden sm:inline font-semibold">@{{ user.username }}</span>
                         </div>
 
-                        <a href="{% url 'tweet_create' %}" class="hidden sm:inline-flex items-center gap-1 px-4 py-1.5 rounded-full text-xs font-semibold bg-black hover:bg-zinc-800 text-white transition shadow-xs">
+                        <a href="{% url 'tweet_create' %}" class="hidden sm:inline-flex items-center gap-1 px-4 py-1.5 rounded-full text-xs font-semibold bg-black dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-black transition shadow-xs">
                             + Tweet
                         </a>
 
                         <form method="post" action="{% url 'logout' %}" class="inline mb-0">
                             {% csrf_token %}
-                            <button type="submit" class="px-3 py-1.5 rounded-full text-xs font-medium text-zinc-600 hover:text-red-600 hover:bg-zinc-100 transition">
+                            <button type="submit" class="px-3 py-1.5 rounded-full text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:text-red-600 dark:hover:text-red-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition cursor-pointer">
                                 Logout
                             </button>
                         </form>
                     </div>
                 {% else %}
-                    <div class="flex items-center gap-2 pl-2 border-l border-zinc-200">
-                        <a href="{% url 'login' %}" class="px-4 py-1.5 rounded-md text-xs font-semibold bg-black hover:bg-zinc-800 text-white transition shadow-xs">
+                    <div class="flex items-center gap-2 pl-2 border-l border-zinc-200 dark:border-zinc-800">
+                        <a href="{% url 'login' %}" class="px-4 py-1.5 rounded-md text-xs font-semibold bg-black dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-black transition shadow-xs">
                             Sign in
                         </a>
                     </div>
@@ -171,17 +169,17 @@
     </main>
 
     <!-- Clean Footer -->
-    <footer class="border-t border-zinc-200 py-10 bg-white mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
+    <footer class="border-t border-zinc-200 dark:border-zinc-800 py-10 bg-white dark:bg-zinc-950 mt-auto transition-colors">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 dark:text-zinc-400">
             <div class="flex items-center gap-2">
-                <span class="font-bold text-zinc-900">chai.tweet</span>
+                <span class="font-bold text-zinc-900 dark:text-zinc-100">chai.tweet</span>
                 <span>•</span>
                 <span>A simple, modern microblogging space</span>
             </div>
             <div class="flex items-center gap-6">
-                <a href="{% url 'tweet_list' %}" class="hover:text-zinc-900 transition">Feed</a>
-                <a href="{% url 'index' %}" class="hover:text-zinc-900 transition">About</a>
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-900 transition flex items-center gap-1">
+                <a href="{% url 'tweet_list' %}" class="hover:text-zinc-900 dark:hover:text-zinc-100 transition">Feed</a>
+                <a href="{% url 'index' %}" class="hover:text-zinc-900 dark:hover:text-zinc-100 transition">About</a>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-900 dark:hover:text-zinc-100 transition flex items-center gap-1">
                     <i data-lucide="github" class="w-3.5 h-3.5"></i> GitHub
                 </a>
             </div>
@@ -190,33 +188,37 @@
 
     <!-- Initialize Icons & Theme Toggle -->
     <script>
-        lucide.createIcons();
-
-        const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
-        const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
+        const themeContainer = document.getElementById('theme-toggle-icon-container');
         const themeToggleBtn = document.getElementById('theme-toggle');
 
-        function syncThemeIcons() {
-            if (document.documentElement.classList.contains('dark')) {
-                themeToggleLightIcon.classList.remove('hidden');
-                themeToggleDarkIcon.classList.add('hidden');
+        function renderThemeIcon() {
+            const isDark = document.documentElement.classList.contains('dark');
+            if (isDark) {
+                themeContainer.innerHTML = '<i data-lucide="sun" class="w-4 h-4 text-amber-400"></i>';
             } else {
-                themeToggleLightIcon.classList.add('hidden');
-                themeToggleDarkIcon.classList.remove('hidden');
+                themeContainer.innerHTML = '<i data-lucide="moon" class="w-4 h-4 text-zinc-700"></i>';
+            }
+            if (window.lucide) {
+                lucide.createIcons();
             }
         }
-        syncThemeIcons();
 
-        themeToggleBtn.addEventListener('click', function() {
-            if (document.documentElement.classList.contains('dark')) {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('color-theme', 'light');
-            } else {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('color-theme', 'dark');
-            }
-            syncThemeIcons();
-        });
+        renderThemeIcon();
+
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', function() {
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('theme', 'light');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('theme', 'dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+                renderThemeIcon();
+            });
+        }
     </script>
 </body>
 </html>
