@@ -1,15 +1,27 @@
 import React from 'react';
 import { Search, Plus, Sun, Moon } from 'lucide-react';
 
-export default function Navbar({ user, onOpenAuth, onOpenCompose, onLogout, theme, onToggleTheme }) {
+export default function Navbar({ 
+  user, 
+  onOpenAuth, 
+  onOpenCompose, 
+  onLogout, 
+  theme, 
+  onToggleTheme,
+  currentView = 'home',
+  onNavigate 
+}) {
   return (
     <>
       {/* Top Announcement Bar */}
       <div className="w-full bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 text-xs py-2 px-4 text-center border-b border-zinc-200/80 dark:border-zinc-800/80 flex items-center justify-center gap-1.5 font-medium transition-colors">
         <span>✨ Welcome to Chai Tweet — share what's on your mind today</span>
-        <a href="#feed" className="inline-flex items-center gap-1 text-zinc-950 dark:text-zinc-100 font-semibold hover:underline transition ml-1">
+        <button 
+          onClick={() => onNavigate ? onNavigate('feed') : null}
+          className="inline-flex items-center gap-1 text-zinc-950 dark:text-zinc-100 font-semibold hover:underline transition ml-1 cursor-pointer"
+        >
           Explore feed →
-        </a>
+        </button>
       </div>
 
       {/* Main Sticky Header */}
@@ -18,7 +30,14 @@ export default function Navbar({ user, onOpenAuth, onOpenCompose, onLogout, them
           
           {/* Logo */}
           <div className="flex items-center gap-8">
-            <a href="/" className="flex items-center gap-2.5 group">
+            <a 
+              href="#"
+              onClick={(e) => {
+                e.preventDefault();
+                onNavigate ? onNavigate('home') : null;
+              }}
+              className="flex items-center gap-2.5 group cursor-pointer"
+            >
               <div className="w-8 h-8 rounded-full bg-black dark:bg-white text-white dark:text-black flex items-center justify-center font-bold text-sm shadow-xs transition group-hover:scale-105">
                 <span className="text-xs">●</span>
               </div>
@@ -28,10 +47,29 @@ export default function Navbar({ user, onOpenAuth, onOpenCompose, onLogout, them
             </a>
 
             {/* Nav Links */}
-            <nav className="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-600 dark:text-zinc-400">
-              <a href="#feed" className="hover:text-zinc-950 dark:hover:text-zinc-100 transition">Feed</a>
+            <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
+              <button 
+                onClick={() => onNavigate ? onNavigate('home') : null}
+                className={`transition cursor-pointer ${
+                  currentView === 'home' 
+                    ? 'text-zinc-950 dark:text-zinc-100 font-semibold' 
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100'
+                }`}
+              >
+                Home
+              </button>
+              <button 
+                onClick={() => onNavigate ? onNavigate('feed') : null}
+                className={`transition cursor-pointer ${
+                  currentView === 'feed' 
+                    ? 'text-zinc-950 dark:text-zinc-100 font-semibold' 
+                    : 'text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100'
+                }`}
+              >
+                Feed
+              </button>
               {user && (
-                <button onClick={() => onOpenCompose()} className="hover:text-zinc-950 dark:hover:text-zinc-100 transition flex items-center gap-1 cursor-pointer">
+                <button onClick={() => onOpenCompose()} className="text-zinc-600 dark:text-zinc-400 hover:text-zinc-950 dark:hover:text-zinc-100 transition flex items-center gap-1 cursor-pointer">
                   New Tweet
                 </button>
               )}

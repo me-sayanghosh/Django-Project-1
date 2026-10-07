@@ -67,7 +67,7 @@
     <!-- Top Announcement Bar -->
     <div class="w-full bg-white dark:bg-zinc-900 text-zinc-600 dark:text-zinc-400 text-xs py-2 px-4 text-center border-b border-zinc-200/80 dark:border-zinc-800/80 flex items-center justify-center gap-1.5 font-medium transition-colors">
         <span>✨ Welcome to Chai Tweet — share what's on your mind today</span>
-        <a href="{% url 'tweet_list' %}" class="inline-flex items-center gap-1 text-zinc-950 dark:text-zinc-100 font-semibold hover:underline transition ml-1">
+        <a href="{% url 'tweet_list' %}#feed" class="inline-flex items-center gap-1 text-zinc-950 dark:text-zinc-100 font-semibold hover:underline transition ml-1">
             Explore feed →
         </a>
     </div>
@@ -89,7 +89,8 @@
 
                 <!-- Nav Links -->
                 <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                    <a href="{% url 'tweet_list' %}" class="hover:text-zinc-950 dark:hover:text-zinc-100 transition">Feed</a>
+                    <a href="{% url 'tweet_list' %}" class="hover:text-zinc-950 dark:hover:text-zinc-100 transition">Home</a>
+                    <a href="{% url 'tweet_list' %}#feed" class="hover:text-zinc-950 dark:hover:text-zinc-100 transition">Feed</a>
                     {% if user.is_authenticated %}
                         <a href="{% url 'tweet_create' %}" class="hover:text-zinc-950 dark:hover:text-zinc-100 transition flex items-center gap-1">
                             New Tweet

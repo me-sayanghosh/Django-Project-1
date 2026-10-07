@@ -1,7 +1,7 @@
 import React from 'react';
 import { Rocket, Trophy, Sparkles, Gem, Coffee, Code, MessageSquare, Layout, Compass, Sun, Heart, Plus } from 'lucide-react';
 
-export default function Hero({ user, tweetCount, onOpenCompose, onOpenAuth }) {
+export default function Hero({ user, tweetCount, onOpenCompose, onOpenAuth, onExploreFeed }) {
   return (
     <div className="relative rounded-[32px] border border-zinc-200/90 dark:border-zinc-800 bg-[#fafafa] dark:bg-zinc-900/50 p-8 sm:p-14 md:p-20 text-center overflow-hidden shadow-[0_1px_4px_rgba(0,0,0,0.03)] mb-16 transition-colors">
       
@@ -53,7 +53,13 @@ export default function Hero({ user, tweetCount, onOpenCompose, onOpenAuth }) {
 
           <a
             href="#feed"
-            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800/80 transition shadow-[0_1px_2px_rgba(0,0,0,0.04)]"
+            onClick={(e) => {
+              if (onExploreFeed) {
+                e.preventDefault();
+                onExploreFeed();
+              }
+            }}
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800/80 transition shadow-[0_1px_2px_rgba(0,0,0,0.04)] cursor-pointer"
           >
             Explore Feed
           </a>

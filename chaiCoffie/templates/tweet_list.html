@@ -6,7 +6,7 @@
 <div class="space-y-16">
 
     <!-- Hero Card Container (Light Pastel Theme, Rounded-3xl, Faint Icons) -->
-    <div class="relative rounded-[32px] border border-zinc-200/90 dark:border-zinc-800 bg-[#fafafa] dark:bg-zinc-900/50 p-8 sm:p-14 md:p-20 text-center overflow-hidden shadow-[0_1px_4px_rgba(0,0,0,0.03)] transition-colors">
+    <div id="hero-section" class="relative rounded-[32px] border border-zinc-200/90 dark:border-zinc-800 bg-[#fafafa] dark:bg-zinc-900/50 p-8 sm:p-14 md:p-20 text-center overflow-hidden shadow-[0_1px_4px_rgba(0,0,0,0.03)] transition-colors">
         
         <!-- Faint Floating Decorative Icons -->
         <div class="absolute inset-0 pointer-events-none opacity-[0.12] dark:opacity-[0.08] select-none text-zinc-500 dark:text-zinc-400 overflow-hidden">
@@ -162,4 +162,19 @@
     </div>
 
 </div>
+
+<script>
+    function updateHeroDisplay() {
+        const hero = document.getElementById('hero-section');
+        if (!hero) return;
+        if (window.location.hash === '#feed') {
+            hero.style.display = 'none';
+        } else {
+            hero.style.display = '';
+        }
+    }
+    window.addEventListener('hashchange', updateHeroDisplay);
+    document.addEventListener('DOMContentLoaded', updateHeroDisplay);
+    updateHeroDisplay();
+</script>
 {% endblock %}

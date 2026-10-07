@@ -59,6 +59,38 @@ export default function App() {
     }
   };
 
+  // Page view state ('home' | 'feed')
+  const [currentView, setCurrentView] = useState(() => {
+    if (typeof window !== 'undefined' && window.location.hash === '#feed') {
+      return 'feed';
+    }
+    return 'home';
+  });
+
+  useEffect(() => {
+    const handleHashChange = () => {
+      if (window.location.hash === '#feed') {
+        setCurrentView('feed');
+      } else {
+        setCurrentView('home');
+      }
+    };
+    window.addEventListener('hashchange', handleHashChange);
+    return () => window.removeEventListener('hashchange', handleHashChange);
+  }, []);
+
+  const navigateTo = (view) => {
+    setCurrentView(view);
+    if (view === 'feed') {
+      window.location.hash = 'feed';
+    } else {
+      if (window.location.hash) {
+        history.pushState(null, '', window.location.pathname);
+      }
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   const handleOpenCompose = (tweet = null) => {
     if (!user) {
       setAuthMode('login');
@@ -110,18 +142,23 @@ export default function App() {
         onLogout={handleLogout}
         theme={theme}
         onToggleTheme={toggleTheme}
+        currentView={currentView}
+        onNavigate={navigateTo}
       />
 
       {/* Main Container */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
-        {/* Hero Section */}
-        <Hero
-          user={user}
-          tweetCount={tweets.length}
-          onOpenCompose={handleOpenCompose}
-          onOpenAuth={handleOpenAuth}
-        />
+        {/* Hero Section - Hidden when on feed page */}
+        {currentView === 'home' && (
+          <Hero
+            user={user}
+            tweetCount={tweets.length}
+            onOpenCompose={handleOpenCompose}
+            onOpenAuth={handleOpenAuth}
+            onExploreFeed={() => navigateTo('feed')}
+          />
+        )}
 
         {/* Feed Section */}
         <div id="feed" className="space-y-6 pt-4 mb-24">
@@ -231,7 +268,18 @@ export default function App() {
             <span>A simple, modern microblogging space</span>
           </div>
           <div className="flex items-center gap-6">
-            <a href="#feed" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition">Feed</a>
+            <button
+              onClick={() => navigateTo('home')}
+              className={`hover:text-zinc-900 dark:hover:text-zinc-100 transition cursor-pointer ${currentView === 'home' ? 'font-semibold text-zinc-950 dark:text-zinc-100' : ''}`}
+            >
+              Home
+            </button>
+            <button
+              onClick={() => navigateTo('feed')}
+              className={`hover:text-zinc-900 dark:hover:text-zinc-100 transition cursor-pointer ${currentView === 'feed' ? 'font-semibold text-zinc-950 dark:text-zinc-100' : ''}`}
+            >
+              Feed
+            </button>
             <a href="#about" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition">About</a>
             <a href="https://github.com" target="_blank" rel="noopener noreferrer" className="hover:text-zinc-900 dark:hover:text-zinc-100 transition">GitHub</a>
           </div>
