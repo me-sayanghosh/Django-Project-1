@@ -67,6 +67,26 @@ export default function App() {
     return 'home';
   });
 
+  // Search query state
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearchChange = (query) => {
+    setSearchQuery(query);
+    if (query.trim() && currentView !== 'feed') {
+      navigateTo('feed');
+    }
+  };
+
+  const filteredTweets = tweets.filter((tweet) => {
+    if (!searchQuery.trim()) return true;
+    const q = searchQuery.toLowerCase().trim();
+    const textMatch = tweet.text?.toLowerCase().includes(q);
+    const authorMatch = 
+      tweet.user?.username?.toLowerCase().includes(q) || 
+      (typeof tweet.user === 'string' && tweet.user.toLowerCase().includes(q));
+    return Boolean(textMatch || authorMatch);
+  });
+
   useEffect(() => {
     const handleHashChange = () => {
       if (window.location.hash === '#feed') {
@@ -144,6 +164,8 @@ export default function App() {
         onToggleTheme={toggleTheme}
         currentView={currentView}
         onNavigate={navigateTo}
+        searchQuery={searchQuery}
+        onSearchChange={handleSearchChange}
       />
 
       {/* Main Container */}
@@ -171,13 +193,31 @@ export default function App() {
             </p>
           </div>
 
+          {/* Active Search Filter Banner */}
+          {searchQuery.trim() && (
+            <div className="flex items-center justify-between px-4 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-600 dark:text-zinc-400 transition-colors">
+              <div className="flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>
+                  Search results for <strong className="text-zinc-950 dark:text-zinc-100 font-semibold">"{searchQuery}"</strong> ({filteredTweets.length} {filteredTweets.length === 1 ? 'tweet' : 'tweets'} found)
+                </span>
+              </div>
+              <button
+                onClick={() => setSearchQuery('')}
+                className="font-semibold text-zinc-900 dark:text-zinc-100 hover:underline cursor-pointer"
+              >
+                Clear search
+              </button>
+            </div>
+          )}
+
           {loading ? (
             <div className="flex items-center justify-center py-20">
               <div className="animate-spin rounded-full h-8 w-8 border-2 border-zinc-900 dark:border-zinc-100 border-t-transparent"></div>
             </div>
-          ) : tweets.length > 0 ? (
+          ) : filteredTweets.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
-              {tweets.map((tweet) => (
+              {filteredTweets.map((tweet) => (
                 <TweetCard
                   key={tweet.id}
                   tweet={tweet}
@@ -186,6 +226,22 @@ export default function App() {
                   onDelete={handleDeleteTweet}
                 />
               ))}
+            </div>
+          ) : searchQuery.trim() ? (
+            <div className="max-w-md mx-auto text-center py-16 px-6 rounded-2xl border border-dashed border-zinc-300 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/40 transition-colors">
+              <div className="w-12 h-12 mx-auto rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-xl mb-4 shadow-2xs">
+                🔍
+              </div>
+              <h3 className="text-base font-semibold text-zinc-950 dark:text-white mb-1">No tweets found</h3>
+              <p className="text-xs text-zinc-500 dark:text-zinc-400 mb-5">
+                No tweets matched "{searchQuery}". Try a different keyword or username.
+              </p>
+              <button
+                onClick={() => setSearchQuery('')}
+                className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-semibold bg-black dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-black transition shadow-sm cursor-pointer"
+              >
+                Clear Search
+              </button>
             </div>
           ) : (
             <div className="max-w-md mx-auto text-center py-16 px-6 rounded-2xl border border-dashed border-zinc-300 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/40 transition-colors">

@@ -28,3 +28,13 @@ body {
   display: flex;
   flex-direction: column;
 }
+
+input.search-input,
+.search-input {
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
+  padding: 0 !important;
+}
+

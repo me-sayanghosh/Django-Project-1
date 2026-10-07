@@ -15,8 +15,9 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-export const getTweets = async () => {
-  const response = await api.get('/tweets/');
+export const getTweets = async (search = '') => {
+  const params = search ? { search } : {};
+  const response = await api.get('/tweets/', { params });
   return response.data;
 };
 

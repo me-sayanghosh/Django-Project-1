@@ -71,6 +71,20 @@
             </p>
         </div>
 
+        {% if search_query %}
+            <div class="flex items-center justify-between px-4 py-2.5 rounded-xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 text-xs text-zinc-600 dark:text-zinc-400 transition-colors">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span>
+                        Search results for <strong class="text-zinc-950 dark:text-zinc-100 font-semibold">"{{ search_query }}"</strong> ({{ tweets|length }} tweet{{ tweets|length|pluralize }} found)
+                    </span>
+                </div>
+                <a href="{% url 'tweet_list' %}#feed" class="font-semibold text-zinc-900 dark:text-zinc-100 hover:underline">
+                    Clear search
+                </a>
+            </div>
+        {% endif %}
+
         {% if tweets %}
             <!-- Grid of Cards (Mac Window Header Style) -->
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 pt-4">
@@ -141,23 +155,37 @@
                 {% endfor %}
             </div>
         {% else %}
-            <!-- Empty State -->
-            <div class="max-w-md mx-auto text-center py-16 px-6 rounded-2xl border border-dashed border-zinc-300 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/40 transition-colors">
-                <div class="w-12 h-12 mx-auto rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-xl mb-4 shadow-2xs">
-                    ☕
+            {% if search_query %}
+                <!-- No Search Results Found -->
+                <div class="max-w-md mx-auto text-center py-16 px-6 rounded-2xl border border-dashed border-zinc-300 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/40 transition-colors">
+                    <div class="w-12 h-12 mx-auto rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-xl mb-4 shadow-2xs">
+                        🔍
+                    </div>
+                    <h3 class="text-base font-semibold text-zinc-900 dark:text-zinc-100 mb-1">No tweets found</h3>
+                    <p class="text-xs text-zinc-500 dark:text-zinc-400 mb-5">No tweets matched "{{ search_query }}". Try a different keyword.</p>
+                    <a href="{% url 'tweet_list' %}#feed" class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-semibold bg-black dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-black transition shadow-sm">
+                        Clear Search
+                    </a>
                 </div>
-                <h3 class="text-base font-semibold text-zinc-900 dark:text-zinc-100 mb-1">No tweets published yet</h3>
-                <p class="text-xs text-zinc-500 dark:text-zinc-400 mb-5">Be the first to brew a fresh post for the community.</p>
-                {% if user.is_authenticated %}
-                    <a href="{% url 'tweet_create' %}" class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-semibold bg-black dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-black transition shadow-sm">
-                        <i data-lucide="plus" class="w-3.5 h-3.5"></i> Create First Tweet
-                    </a>
-                {% else %}
-                    <a href="{% url 'login' %}" class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-semibold bg-black dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-black transition shadow-sm">
-                        Sign in to Post
-                    </a>
-                {% endif %}
-            </div>
+            {% else %}
+                <!-- Empty State -->
+                <div class="max-w-md mx-auto text-center py-16 px-6 rounded-2xl border border-dashed border-zinc-300 dark:border-zinc-800 bg-zinc-50/60 dark:bg-zinc-900/40 transition-colors">
+                    <div class="w-12 h-12 mx-auto rounded-full bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center text-xl mb-4 shadow-2xs">
+                        ☕
+                    </div>
+                    <h3 class="text-base font-semibold text-zinc-900 dark:text-zinc-100 mb-1">No tweets published yet</h3>
+                    <p class="text-xs text-zinc-500 dark:text-zinc-400 mb-5">Be the first to brew a fresh post for the community.</p>
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'tweet_create' %}" class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-semibold bg-black dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-black transition shadow-sm">
+                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Create First Tweet
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}" class="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full text-xs font-semibold bg-black dark:bg-white hover:bg-zinc-800 dark:hover:bg-zinc-200 text-white dark:text-black transition shadow-sm">
+                            Sign in to Post
+                        </a>
+                    {% endif %}
+                </div>
+            {% endif %}
         {% endif %}
     </div>
 
@@ -167,7 +195,7 @@
     function updateHeroDisplay() {
         const hero = document.getElementById('hero-section');
         if (!hero) return;
-        if (window.location.hash === '#feed') {
+        if (window.location.hash === '#feed' || '{{ search_query }}' !== '') {
             hero.style.display = 'none';
         } else {
             hero.style.display = '';

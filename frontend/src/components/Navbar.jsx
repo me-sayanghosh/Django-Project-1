@@ -1,5 +1,5 @@
-import React from 'react';
-import { Search, Plus, Sun, Moon } from 'lucide-react';
+import React, { useRef, useEffect } from 'react';
+import { Search, Plus, Sun, Moon, X } from 'lucide-react';
 
 export default function Navbar({ 
   user, 
@@ -9,8 +9,26 @@ export default function Navbar({
   theme, 
   onToggleTheme,
   currentView = 'home',
-  onNavigate 
+  onNavigate,
+  searchQuery = '',
+  onSearchChange,
 }) {
+  const searchInputRef = useRef(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        searchInputRef.current?.focus();
+        searchInputRef.current?.select();
+      }
+      if (e.key === 'Escape' && document.activeElement === searchInputRef.current) {
+        searchInputRef.current?.blur();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
   return (
     <>
       {/* Top Announcement Bar */}
@@ -79,11 +97,41 @@ export default function Navbar({
           {/* Right Controls */}
           <div className="flex items-center gap-3">
             
-            {/* Search Mock Bar (Matches Screenshot) */}
-            <div className="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs text-zinc-500 dark:text-zinc-400 w-44 lg:w-56 hover:border-zinc-300 dark:hover:border-zinc-700 transition">
-              <Search className="w-3.5 h-3.5 text-zinc-400" />
-              <span className="flex-1 font-normal">Search</span>
-              <kbd className="px-1.5 py-0.5 text-[10px] font-semibold bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded shadow-xs text-zinc-500 dark:text-zinc-400">⌘ K</kbd>
+            {/* Search Input Bar (Seamless pill styling with no inner border) */}
+            <div className="relative flex items-center">
+              <div 
+                onClick={() => searchInputRef.current?.focus()}
+                className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900/80 hover:border-zinc-300 dark:hover:border-zinc-700 focus-within:bg-white dark:focus-within:bg-zinc-900 focus-within:border-zinc-300 dark:focus-within:border-zinc-700 focus-within:ring-2 focus-within:ring-zinc-950/5 dark:focus-within:ring-white/5 text-xs text-zinc-700 dark:text-zinc-300 w-36 sm:w-48 md:w-56 lg:w-64 transition cursor-text shadow-2xs"
+              >
+                <Search className="w-3.5 h-3.5 text-zinc-400 dark:text-zinc-500 shrink-0 pointer-events-none" />
+                <input
+                  ref={searchInputRef}
+                  type="text"
+                  value={searchQuery}
+                  onChange={(e) => onSearchChange?.(e.target.value)}
+                  placeholder="Search"
+                  style={{ border: 'none', outline: 'none', boxShadow: 'none', background: 'transparent', padding: 0 }}
+                  className="search-input w-full bg-transparent border-0 border-none outline-none focus:outline-none focus:ring-0 focus:border-none p-0 text-xs text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 dark:placeholder:text-zinc-500 shadow-none ring-0 leading-normal"
+                />
+                {searchQuery ? (
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onSearchChange?.('');
+                      searchInputRef.current?.focus();
+                    }}
+                    className="p-0.5 text-zinc-400 hover:text-zinc-700 dark:hover:text-zinc-200 rounded cursor-pointer shrink-0"
+                    title="Clear search"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                ) : (
+                  <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[10px] font-semibold bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded shadow-2xs text-zinc-500 dark:text-zinc-400 shrink-0 select-none pointer-events-none">
+                    ⌘ K
+                  </kbd>
+                )}
+              </div>
             </div>
 
             {/* Sun / Moon Theme Toggle Icon */}

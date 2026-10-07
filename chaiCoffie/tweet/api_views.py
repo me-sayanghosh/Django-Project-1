@@ -16,7 +16,11 @@ class TweetListCreateAPIView(APIView):
         return [permissions.AllowAny()]
 
     def get(self, request):
+        search_query = request.query_params.get('search', '').strip()
         tweets = Tweet.objects.all().order_by('-created_at')
+        if search_query:
+            from django.db.models import Q
+            tweets = tweets.filter(Q(text__icontains=search_query) | Q(user__username__icontains=search_query))
         serializer = TweetSerializer(tweets, many=True, context={'request': request})
         return Response(serializer.data, status=status.HTTP_200_OK)
 

@@ -10,8 +10,12 @@ def index(request):
 
 
 def tweet_list(request):
+    search_query = request.GET.get('search', '').strip()
     tweets = Tweet.objects.all().order_by('-created_at')
-    return render(request, 'tweet_list.html', {'tweets': tweets})
+    if search_query:
+        from django.db.models import Q
+        tweets = tweets.filter(Q(text__icontains=search_query) | Q(user__username__icontains=search_query))
+    return render(request, 'tweet_list.html', {'tweets': tweets, 'search_query': search_query})
 
 
 @login_required
