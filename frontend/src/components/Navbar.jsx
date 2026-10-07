@@ -35,7 +35,6 @@ export default function Navbar({ user, onOpenAuth, onOpenCompose, onLogout, them
                   New Tweet
                 </button>
               )}
-              <a href="#about" className="hover:text-zinc-950 dark:hover:text-zinc-100 transition">About</a>
             </nav>
           </div>
 
