@@ -7,27 +7,27 @@
 {% block content %}
 <div class="max-w-xl mx-auto py-8">
     
-    <div class="rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 overflow-hidden shadow-xs">
+    <div class="rounded-2xl border border-zinc-200/90 bg-white overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.04)]">
         
-        <!-- Mac Window Top Bar -->
-        <div class="px-5 py-3 bg-zinc-50 dark:bg-zinc-950/60 border-b border-zinc-100 dark:border-zinc-800/80 flex items-center justify-between">
+        <!-- Mac Window Top Bar (Colored Dots) -->
+        <div class="px-5 py-3 bg-[#fbfbfb] border-b border-zinc-100 flex items-center justify-between">
             <div class="flex items-center gap-1.5">
-                <span class="w-2.5 h-2.5 rounded-full bg-red-400/90 inline-block"></span>
-                <span class="w-2.5 h-2.5 rounded-full bg-amber-400/90 inline-block"></span>
-                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400/90 inline-block"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-[#ff5f56] inline-block"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-[#ffbd2e] inline-block"></span>
+                <span class="w-2.5 h-2.5 rounded-full bg-[#27c93f] inline-block"></span>
             </div>
             <span class="text-xs font-mono text-zinc-400">
-                {% if form.instance.pk %}editor.tweet/edit{% else %}editor.tweet/new{% endif %}
+                {% if form.instance.pk %}compose/edit{% else %}compose/new{% endif %}
             </span>
         </div>
 
         <div class="p-6 sm:p-8 space-y-6">
             <div>
-                <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-zinc-950 dark:text-white">
-                    {% if form.instance.pk %}Edit Tweet{% else %}What's brewing?{% endif %}
+                <h2 class="text-xl sm:text-2xl font-bold tracking-tight text-zinc-950">
+                    {% if form.instance.pk %}Edit Tweet{% else %}Create a Tweet{% endif %}
                 </h2>
-                <p class="text-xs text-zinc-500 dark:text-zinc-400 mt-1">
-                    Share your update with the community. You can add text and attach an optional image.
+                <p class="text-xs text-zinc-500 mt-1">
+                    Share your update with the community. You can add text and attach an optional photo.
                 </p>
             </div>
 
@@ -36,7 +36,7 @@
 
                 <!-- Tweet Text Input -->
                 <div class="space-y-1.5">
-                    <label for="id_text" class="block text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                    <label for="id_text" class="block text-xs font-semibold uppercase tracking-wider text-zinc-600">
                         Tweet Text (Max 240 chars)
                     </label>
                     <textarea 
@@ -46,49 +46,49 @@
                         maxlength="240" 
                         required 
                         placeholder="What's on your mind? Sip some chai and share your thoughts..."
-                        class="w-full rounded-xl border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 placeholder:text-zinc-400 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-900 dark:focus:ring-zinc-100 transition resize-none"
+                        class="w-full rounded-xl border border-zinc-200 bg-white text-zinc-900 placeholder:text-zinc-400 px-4 py-3 text-sm focus:outline-none focus:ring-2 focus:ring-zinc-950 transition resize-none"
                     >{{ form.text.value|default:'' }}</textarea>
                     
                     {% for error in form.text.errors %}
-                        <p class="text-xs text-red-600 dark:text-red-400">{{ error }}</p>
+                        <p class="text-xs text-red-600">{{ error }}</p>
                     {% endfor %}
                 </div>
 
                 <!-- Photo Upload Field -->
                 <div class="space-y-1.5">
-                    <label for="id_photo" class="block text-xs font-semibold uppercase tracking-wider text-zinc-600 dark:text-zinc-400">
+                    <label for="id_photo" class="block text-xs font-semibold uppercase tracking-wider text-zinc-600">
                         Photo Attachment (Optional)
                     </label>
                     
                     {% if form.instance.photo %}
-                        <div class="mb-3 flex items-center gap-3 p-2 rounded-xl border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-950">
-                            <img src="{{ form.instance.photo.url }}" alt="Current photo" class="w-14 h-14 object-cover rounded-lg border border-zinc-200 dark:border-zinc-700">
-                            <div class="text-xs text-zinc-500 flex-1">Current image uploaded</div>
+                        <div class="mb-3 flex items-center gap-3 p-2.5 rounded-xl border border-zinc-200 bg-zinc-50">
+                            <img src="{{ form.instance.photo.url }}" alt="Current photo" class="w-14 h-14 object-cover rounded-lg border border-zinc-200">
+                            <div class="text-xs text-zinc-500 flex-1">Current image attached</div>
                         </div>
                     {% endif %}
 
-                    <div class="relative flex flex-col items-center justify-center p-6 border-2 border-dashed border-zinc-200 dark:border-zinc-800 rounded-xl bg-zinc-50/50 dark:bg-zinc-950/40 hover:bg-zinc-50 dark:hover:bg-zinc-900 transition">
+                    <div class="relative flex flex-col items-center justify-center p-6 border-2 border-dashed border-zinc-200 rounded-xl bg-zinc-50/50 hover:bg-zinc-50 transition">
                         <i data-lucide="image" class="w-8 h-8 text-zinc-400 mb-2"></i>
                         <input 
                             type="file" 
                             name="photo" 
                             id="id_photo" 
                             accept="image/*"
-                            class="block w-full text-xs text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-zinc-900 file:text-white dark:file:bg-zinc-100 dark:file:text-zinc-900 hover:file:opacity-90 cursor-pointer"
+                            class="block w-full text-xs text-zinc-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-black file:text-white hover:file:opacity-90 cursor-pointer"
                         >
                     </div>
 
                     {% for error in form.photo.errors %}
-                        <p class="text-xs text-red-600 dark:text-red-400">{{ error }}</p>
+                        <p class="text-xs text-red-600">{{ error }}</p>
                     {% endfor %}
                 </div>
 
                 <!-- Form Action Buttons -->
-                <div class="flex items-center justify-end gap-3 pt-3 border-t border-zinc-100 dark:border-zinc-800">
-                    <a href="{% url 'tweet_list' %}" class="px-5 py-2.5 rounded-full text-xs font-medium text-zinc-600 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">
+                <div class="flex items-center justify-end gap-3 pt-3 border-t border-zinc-100">
+                    <a href="{% url 'tweet_list' %}" class="px-5 py-2.5 rounded-full text-xs font-medium text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100 transition">
                         Cancel
                     </a>
-                    <button type="submit" class="inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full text-xs font-semibold bg-zinc-950 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 transition shadow-sm">
+                    <button type="submit" class="inline-flex items-center gap-1.5 px-6 py-2.5 rounded-full text-xs font-semibold bg-black hover:bg-zinc-800 text-white transition shadow-sm">
                         {% if form.instance.pk %}
                             <i data-lucide="check" class="w-3.5 h-3.5"></i> Update Tweet
                         {% else %}

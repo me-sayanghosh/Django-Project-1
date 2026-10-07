@@ -22,6 +22,12 @@
                         sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
                     },
                     colors: {
+                        pastel: {
+                            bg: '#fcfcfd',
+                            hero: '#fafafb',
+                            card: '#ffffff',
+                            border: '#e4e4e7',
+                        },
                         zinc: {
                             50: '#fafafa',
                             100: '#f4f4f5',
@@ -48,93 +54,99 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
     <script>
-        // Init dark mode before paint
-        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        // Default to light theme
+        if (localStorage.getItem('color-theme') === 'dark') {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark');
+            localStorage.setItem('color-theme', 'light');
         }
     </script>
 </head>
-<body class="bg-white dark:bg-zinc-950 text-zinc-900 dark:text-zinc-100 font-sans min-h-screen flex flex-col antialiased selection:bg-zinc-900 selection:text-white dark:selection:bg-zinc-100 dark:selection:text-zinc-900 transition-colors duration-200">
+<body class="bg-[#ffffff] text-zinc-900 font-sans min-h-screen flex flex-col antialiased selection:bg-zinc-900 selection:text-white transition-colors duration-200">
 
     <!-- Top Announcement Bar -->
-    <div class="w-full bg-zinc-900 dark:bg-zinc-900 text-zinc-100 text-xs py-2 px-4 text-center border-b border-zinc-800 flex items-center justify-center gap-1.5 font-medium">
-        <span>☕ Make your thoughts fly with Chai Tweet</span>
-        <a href="{% url 'tweet_list' %}" class="underline underline-offset-2 hover:text-amber-400 transition ml-1 inline-flex items-center gap-1">
-            Explore community tweets <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
+    <div class="w-full bg-white text-zinc-600 text-xs py-2 px-4 text-center border-b border-zinc-200/80 flex items-center justify-center gap-1.5 font-medium">
+        <span>✨ Welcome to Chai Tweet — share what's on your mind today</span>
+        <a href="{% url 'tweet_list' %}" class="inline-flex items-center gap-1 text-zinc-950 font-semibold hover:underline transition ml-1">
+            Explore feed →
         </a>
     </div>
 
-    <!-- Navigation Header -->
-    <header class="sticky top-0 z-50 w-full border-b border-zinc-200/80 dark:border-zinc-800/80 bg-white/80 dark:bg-zinc-950/80 backdrop-blur-md">
+    <!-- Navigation Header (Matches Screenshot: Pure White with hair-line border) -->
+    <header class="sticky top-0 z-50 w-full border-b border-zinc-200/80 bg-white/95 backdrop-blur-md">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
-            <!-- Brand / Logo -->
+            
+            <!-- Brand / Logo (Circle Icon + Bold Name) -->
             <div class="flex items-center gap-8">
                 <a href="{% url 'tweet_list' %}" class="flex items-center gap-2.5 group">
-                    <div class="w-8 h-8 rounded-full bg-zinc-900 dark:bg-white text-white dark:text-zinc-900 flex items-center justify-center font-bold text-sm shadow-sm transition group-hover:scale-105">
-                        ☕
+                    <div class="w-8 h-8 rounded-full bg-black text-white flex items-center justify-center font-bold text-sm shadow-xs transition group-hover:scale-105">
+                        <span class="text-xs">●</span>
                     </div>
-                    <span class="font-extrabold text-lg tracking-tight text-zinc-900 dark:text-white">
-                        chai<span class="text-zinc-400 dark:text-zinc-500">.</span>tweet
+                    <span class="font-extrabold text-lg tracking-tight text-zinc-950">
+                        chai<span class="text-zinc-400">.</span>tweet
                     </span>
                 </a>
 
-                <!-- Nav Links -->
-                <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-600 dark:text-zinc-400">
-                    <a href="{% url 'tweet_list' %}" class="hover:text-zinc-950 dark:hover:text-zinc-100 transition">Feed</a>
+                <!-- Nav Links (Matches Screenshot: Templates, Blocks, MCP, Browse, Pricing style) -->
+                <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-zinc-600">
+                    <a href="{% url 'tweet_list' %}" class="hover:text-zinc-950 transition">Feed</a>
                     {% if user.is_authenticated %}
-                        <a href="{% url 'tweet_create' %}" class="hover:text-zinc-950 dark:hover:text-zinc-100 transition flex items-center gap-1">
-                            <i data-lucide="plus-circle" class="w-4 h-4"></i> New Tweet
+                        <a href="{% url 'tweet_create' %}" class="hover:text-zinc-950 transition flex items-center gap-1">
+                            New Tweet
                         </a>
                     {% endif %}
-                    <a href="{% url 'index' %}" class="hover:text-zinc-950 dark:hover:text-zinc-100 transition">About</a>
+                    <a href="{% url 'index' %}" class="hover:text-zinc-950 transition">About</a>
+                    <a href="{% url 'tweet_list' %}#feed" class="text-zinc-400 hover:text-zinc-950 transition">Browse</a>
                 </nav>
             </div>
 
-            <!-- Right Controls: Search, Theme Toggle, Auth -->
+            <!-- Right Controls (Search with Command K, Sun/Moon, GitHub, Discord, Sign In) -->
             <div class="flex items-center gap-3">
-                <!-- Search Mock with Command Badge (Matches Screenshot) -->
-                <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-zinc-200 dark:border-zinc-800 bg-zinc-50 dark:bg-zinc-900 text-xs text-zinc-500 dark:text-zinc-400 w-48 lg:w-64">
-                    <i data-lucide="search" class="w-3.5 h-3.5"></i>
-                    <span class="flex-1">Search tweets...</span>
-                    <kbd class="px-1.5 py-0.5 text-[10px] font-semibold bg-white dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded shadow-xs text-zinc-600 dark:text-zinc-300">⌘ K</kbd>
+                
+                <!-- Search Bar with Shortcut K (Matches Screenshot Exactly) -->
+                <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-lg border border-zinc-200 bg-zinc-50 text-xs text-zinc-500 w-44 lg:w-56 hover:border-zinc-300 transition">
+                    <i data-lucide="search" class="w-3.5 h-3.5 text-zinc-400"></i>
+                    <span class="flex-1 font-normal">Search</span>
+                    <kbd class="px-1.5 py-0.5 text-[10px] font-semibold bg-white border border-zinc-200 rounded shadow-xs text-zinc-500">⌘ K</kbd>
                 </div>
 
-                <!-- Theme Toggle Button -->
-                <button id="theme-toggle" type="button" class="p-2 rounded-lg text-zinc-500 hover:text-zinc-900 dark:text-zinc-400 dark:hover:text-zinc-100 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition" aria-label="Toggle theme">
+                <!-- Light / Dark Mode Toggle Icon -->
+                <button id="theme-toggle" type="button" class="p-2 rounded-lg text-zinc-500 hover:text-zinc-950 hover:bg-zinc-100 transition" aria-label="Toggle theme">
+                    <i id="theme-toggle-light-icon" data-lucide="sun" class="w-4 h-4"></i>
                     <i id="theme-toggle-dark-icon" data-lucide="moon" class="w-4 h-4 hidden"></i>
-                    <i id="theme-toggle-light-icon" data-lucide="sun" class="w-4 h-4 hidden"></i>
                 </button>
 
-                <!-- Auth Buttons -->
+                <!-- GitHub Icon -->
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="p-2 rounded-lg text-zinc-600 hover:text-zinc-950 hover:bg-zinc-100 transition" aria-label="GitHub">
+                    <i data-lucide="github" class="w-4 h-4"></i>
+                </a>
+
+                <!-- Auth Buttons (Matches Screenshot: Black Pill Button) -->
                 {% if user.is_authenticated %}
-                    <div class="flex items-center gap-3 pl-2 border-l border-zinc-200 dark:border-zinc-800">
-                        <div class="flex items-center gap-2 text-xs font-medium text-zinc-600 dark:text-zinc-400">
-                            <div class="w-7 h-7 rounded-full bg-zinc-100 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 flex items-center justify-center font-bold text-zinc-800 dark:text-zinc-200">
+                    <div class="flex items-center gap-3 pl-2 border-l border-zinc-200">
+                        <div class="flex items-center gap-2 text-xs font-medium text-zinc-700">
+                            <div class="w-7 h-7 rounded-full bg-zinc-100 border border-zinc-300 flex items-center justify-center font-bold text-zinc-800">
                                 {{ user.username|make_list|first|upper }}
                             </div>
-                            <span class="hidden sm:inline">@{{ user.username }}</span>
+                            <span class="hidden sm:inline font-semibold">@{{ user.username }}</span>
                         </div>
 
-                        <a href="{% url 'tweet_create' %}" class="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-white text-white dark:text-zinc-900 transition shadow-xs">
-                            <i data-lucide="plus" class="w-3.5 h-3.5"></i> Tweet
+                        <a href="{% url 'tweet_create' %}" class="hidden sm:inline-flex items-center gap-1 px-4 py-1.5 rounded-full text-xs font-semibold bg-black hover:bg-zinc-800 text-white transition shadow-xs">
+                            + Tweet
                         </a>
 
                         <form method="post" action="{% url 'logout' %}" class="inline mb-0">
                             {% csrf_token %}
-                            <button type="submit" class="px-3 py-1.5 rounded-full text-xs font-medium text-zinc-600 hover:text-red-600 dark:text-zinc-400 dark:hover:text-red-400 hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">
+                            <button type="submit" class="px-3 py-1.5 rounded-full text-xs font-medium text-zinc-600 hover:text-red-600 hover:bg-zinc-100 transition">
                                 Logout
                             </button>
                         </form>
                     </div>
                 {% else %}
-                    <div class="flex items-center gap-2 pl-2 border-l border-zinc-200 dark:border-zinc-800">
-                        <a href="{% url 'login' %}" class="px-3.5 py-1.5 rounded-full text-xs font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-950 dark:hover:text-white hover:bg-zinc-100 dark:hover:bg-zinc-800 transition">
-                            Sign In
-                        </a>
-                        <a href="{% url 'register' %}" class="px-4 py-1.5 rounded-full text-xs font-semibold bg-zinc-900 hover:bg-zinc-800 dark:bg-zinc-100 dark:hover:bg-white text-white dark:text-zinc-900 transition shadow-xs">
-                            Get Started
+                    <div class="flex items-center gap-2 pl-2 border-l border-zinc-200">
+                        <a href="{% url 'login' %}" class="px-4 py-1.5 rounded-md text-xs font-semibold bg-black hover:bg-zinc-800 text-white transition shadow-xs">
+                            Sign in
                         </a>
                     </div>
                 {% endif %}
@@ -142,12 +154,12 @@
         </div>
     </header>
 
-    <!-- Main App Container -->
+    <!-- Main Content Area -->
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {% if messages %}
             <div class="mb-6 space-y-2">
                 {% for message in messages %}
-                    <div class="flex items-center justify-between p-3.5 rounded-xl border text-sm font-medium {% if message.tags == 'error' %}bg-red-50 dark:bg-red-950/40 border-red-200 dark:border-red-900/60 text-red-800 dark:text-red-300{% elif message.tags == 'success' %}bg-emerald-50 dark:bg-emerald-950/40 border-emerald-200 dark:border-emerald-900/60 text-emerald-800 dark:text-emerald-300{% else %}bg-zinc-50 dark:bg-zinc-900 border-zinc-200 dark:border-zinc-800 text-zinc-800 dark:text-zinc-200{% endif %}">
+                    <div class="flex items-center justify-between p-3.5 rounded-xl border text-sm font-medium {% if message.tags == 'error' %}bg-red-50 border-red-200 text-red-800{% elif message.tags == 'success' %}bg-emerald-50 border-emerald-200 text-emerald-800{% else %}bg-zinc-50 border-zinc-200 text-zinc-800{% endif %}">
                         <span>{{ message }}</span>
                     </div>
                 {% endfor %}
@@ -158,29 +170,28 @@
         {% endblock %}
     </main>
 
-    <!-- Footer (Clean shadcn style) -->
-    <footer class="border-t border-zinc-200 dark:border-zinc-800 py-10 bg-white dark:bg-zinc-950 mt-auto">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500 dark:text-zinc-400">
+    <!-- Clean Footer -->
+    <footer class="border-t border-zinc-200 py-10 bg-white mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-zinc-500">
             <div class="flex items-center gap-2">
-                <span class="font-bold text-zinc-900 dark:text-white">chai.tweet</span>
+                <span class="font-bold text-zinc-900">chai.tweet</span>
                 <span>•</span>
-                <span>Crafted with Django 4.2 & shadcn aesthetics</span>
+                <span>A simple, modern microblogging space</span>
             </div>
             <div class="flex items-center gap-6">
-                <a href="{% url 'tweet_list' %}" class="hover:text-zinc-900 dark:hover:text-zinc-100 transition">Feed</a>
-                <a href="{% url 'index' %}" class="hover:text-zinc-900 dark:hover:text-zinc-100 transition">About</a>
-                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-900 dark:hover:text-zinc-100 transition flex items-center gap-1">
+                <a href="{% url 'tweet_list' %}" class="hover:text-zinc-900 transition">Feed</a>
+                <a href="{% url 'index' %}" class="hover:text-zinc-900 transition">About</a>
+                <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="hover:text-zinc-900 transition flex items-center gap-1">
                     <i data-lucide="github" class="w-3.5 h-3.5"></i> GitHub
                 </a>
             </div>
         </div>
     </footer>
 
-    <!-- Initialize Icons & Theme Toggle Script -->
+    <!-- Initialize Icons & Theme Toggle -->
     <script>
         lucide.createIcons();
 
-        // Theme Toggle Logic
         const themeToggleDarkIcon = document.getElementById('theme-toggle-dark-icon');
         const themeToggleLightIcon = document.getElementById('theme-toggle-light-icon');
         const themeToggleBtn = document.getElementById('theme-toggle');

@@ -5,28 +5,28 @@
 {% block content %}
 <div class="max-w-4xl mx-auto space-y-12 py-6">
 
-    <!-- Hero Card Container -->
-    <div class="relative rounded-3xl border border-zinc-200 dark:border-zinc-800 bg-gradient-to-b from-zinc-50/60 to-white dark:from-zinc-900/60 dark:to-zinc-950 p-8 sm:p-14 text-center overflow-hidden shadow-xs">
+    <!-- Hero Card Container in Light Pastel Theme -->
+    <div class="relative rounded-[32px] border border-zinc-200/90 bg-[#fafafa] p-8 sm:p-14 text-center overflow-hidden shadow-[0_1px_4px_rgba(0,0,0,0.03)]">
         
         <div class="relative z-10 space-y-4">
-            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-zinc-100 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-200 border border-zinc-200 dark:border-zinc-700">
-                ☕ Full-Stack Django Project
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-white text-zinc-800 border border-zinc-200 shadow-2xs">
+                ☕ Community Platform
             </span>
 
-            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-zinc-950 dark:text-white">
+            <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-zinc-950">
                 About Chai Tweet
             </h1>
 
-            <p class="text-base sm:text-lg text-zinc-600 dark:text-zinc-400 font-normal max-w-2xl mx-auto leading-relaxed">
-                An end-to-end full-stack Twitter clone built with Django 4.2 MTV architecture, Pillow for media uploads, custom user authentication, and a clean modern interface inspired by shadcn/ui.
+            <p class="text-base sm:text-lg text-zinc-600 font-normal max-w-2xl mx-auto leading-relaxed">
+                Chai Tweet is a distraction-free space to share your thoughts, stories, and photos with friends and creators across the community.
             </p>
 
             <div class="pt-4 flex items-center justify-center gap-3">
-                <a href="{% url 'tweet_list' %}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold bg-zinc-950 hover:bg-zinc-800 dark:bg-white dark:hover:bg-zinc-200 text-white dark:text-zinc-950 transition">
+                <a href="{% url 'tweet_list' %}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-semibold bg-black hover:bg-zinc-800 text-white transition shadow-sm">
                     Explore Feed
                 </a>
                 {% if not user.is_authenticated %}
-                    <a href="{% url 'register' %}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium border border-zinc-300 dark:border-zinc-700 bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 hover:bg-zinc-50 dark:hover:bg-zinc-800 transition">
+                    <a href="{% url 'register' %}" class="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-sm font-medium border border-zinc-200 bg-white text-zinc-900 hover:bg-zinc-50 transition shadow-[0_1px_2px_rgba(0,0,0,0.04)]">
                         Join Community
                     </a>
                 {% endif %}
@@ -34,35 +34,35 @@
         </div>
     </div>
 
-    <!-- Features Grid -->
+    <!-- Features Grid (Pastel White Cards) -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-xs space-y-2">
-            <div class="w-10 h-10 rounded-xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-lg mb-3">
+        <div class="p-6 rounded-2xl border border-zinc-200/90 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04)] space-y-2">
+            <div class="w-10 h-10 rounded-xl bg-zinc-50 border border-zinc-200 flex items-center justify-center text-lg mb-3">
                 ⚡
             </div>
-            <h3 class="font-bold text-base text-zinc-900 dark:text-white">Full CRUD Operations</h3>
-            <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                Create, read, edit, and delete tweets seamlessly with database-backed forms and model validation.
+            <h3 class="font-bold text-base text-zinc-950">Express Yourself</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed">
+                Share thoughts in quick, concise posts and engage with meaningful conversations anytime.
             </p>
         </div>
 
-        <div class="p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-xs space-y-2">
-            <div class="w-10 h-10 rounded-xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-lg mb-3">
-                🖼️
+        <div class="p-6 rounded-2xl border border-zinc-200/90 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04)] space-y-2">
+            <div class="w-10 h-10 rounded-xl bg-zinc-50 border border-zinc-200 flex items-center justify-center text-lg mb-3">
+                📸
             </div>
-            <h3 class="font-bold text-base text-zinc-900 dark:text-white">Media Uploads with Pillow</h3>
-            <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                Attach images with automatic media root management, dynamic image previews, and responsive cards.
+            <h3 class="font-bold text-base text-zinc-950">Photo Sharing</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed">
+                Bring your updates to life by uploading photos directly alongside your messages.
             </p>
         </div>
 
-        <div class="p-6 rounded-2xl border border-zinc-200 dark:border-zinc-800 bg-white dark:bg-zinc-900 shadow-xs space-y-2">
-            <div class="w-10 h-10 rounded-xl bg-zinc-100 dark:bg-zinc-800 flex items-center justify-center text-lg mb-3">
-                🛡️
+        <div class="p-6 rounded-2xl border border-zinc-200/90 bg-white shadow-[0_1px_3px_rgba(0,0,0,0.04)] space-y-2">
+            <div class="w-10 h-10 rounded-xl bg-zinc-50 border border-zinc-200 flex items-center justify-center text-lg mb-3">
+                🔒
             </div>
-            <h3 class="font-bold text-base text-zinc-900 dark:text-white">Route Protection & Auth</h3>
-            <p class="text-xs text-zinc-500 dark:text-zinc-400 leading-relaxed">
-                Login-required views, custom user registration with auto-login, and ownership-protected editing/deleting.
+            <h3 class="font-bold text-base text-zinc-950">Safe & Personal</h3>
+            <p class="text-xs text-zinc-500 leading-relaxed">
+                Keep control over your content with personal account security and privacy controls.
             </p>
         </div>
     </div>
