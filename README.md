@@ -1,4 +1,4 @@
-# ChaiTweet 🍵
+# ChaiTweet 
 
 A full-stack Twitter/X-like micro-blogging application built with **Django** (backend) and **React + Vite** (frontend). Users can register, log in, post tweets with optional photos, edit and delete their own tweets, and search across all posts.
 
