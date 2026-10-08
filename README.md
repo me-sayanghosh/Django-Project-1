@@ -1,4 +1,4 @@
-# chaiCoffie 🍵
+# chaiTweet 🍵
 
 A full-stack Twitter/X-like micro-blogging application built with **Django** (backend) and **React + Vite** (frontend). Users can register, log in, post tweets with optional photos, edit and delete their own tweets, and search across all posts.
 
@@ -99,7 +99,7 @@ Base URL: `http://127.0.0.1:8000/api/`
 {
   "id": 1,
   "user": { "id": 1, "username": "alice", "email": "alice@example.com" },
-  "text": "Hello, chaiCoffie! ☕",
+  "text": "Hello, chaiTweet! 🍵",
   "photo": null,
   "photo_url": null,
   "created_at": "2026-10-07T14:00:00Z",
